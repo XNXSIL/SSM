@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.sang.dao.MessageDao">
+
+    <resultMap id="Message" type="org.sang.entity.Message">
+        <id column="id" jdbcType="INTEGER" property="id"></id>
+        <result column="username" jdbcType="VARCHAR" property="username"></result>
+        <result column="head_protrait" jdbcType="VARCHAR" property="head_protrait"></result>
+        <result column="content" jdbcType="VARCHAR" property="content"></result>
+        <result column="date" jdbcType="VARCHAR" property="date"></result>
+        <result column="store_count" jdbcType="INTEGER" property="store_count"></result>
+        <result column="comment_count" jdbcType="INTEGER" property="comment_count"></result>
+        <result column="good_count" jdbcType="INTEGER" property="good_count"></result>
+        <association property="pictures" column="id" select="getAllPictures"></association>
+        <association property="comments" column="id" select="getRecentComments0"></association>
+    </resultMap>
+
+    <resultMap id="Comment" type="org.sang.entity.Comment">
+        <result column="username" jdbcType="VARCHAR" property="username"></result>
+        <result column="comments" jdbcType="VARCHAR" property="content"></result>
+        <result column="date" jdbcType="VARCHAR" property="date"></result>
+    </resultMap>
+    <select id="getRecentMessages" parameterType="int" resultMap="Message">
+        SELECT * FROM message ORDER BY date DESC LIMIT #{start}, 20
+    </select>
+
+    <select id="getMyMessages" parameterType="string" resultMap="Message">
+        SELECT * FROM message WHERE username=#{username}
+    </select>
+
+    <select id="getAllPictures" parameterType="int" resultType="string">
+        SELECT pictures FROM pictures WHERE id=#{id}
+    </select>
+
+    <select id="getRecentComments0" parameterType="int" resultMap="Comment">
+        SELECT username,comments,date FROM comments WHERE id=#{id} ORDER BY date DESC LIMIT 0, 10
+    </select>
+
+    <select id="getRecentComments" parameterType="int" resultMap="Comment">
+        SELECT username,comments,date FROM comments WHERE id=#{id} ORDER BY date DESC LIMIT #{start}, 10
+    </select>
+
+    <insert id="subComment">
+        INSERT INTO comments(username,comments,date,id) VALUES(#{username}, #{content}, #{date}, #{id})
+    </insert>
+
+    <insert id="subStore">
+        INSERT INTO stores(username,id) VALUES(#{username}, #{id})
+    </insert>
+
+    <delete id="cancelStore">
+        DELETE FROM stores WHERE username=#{username} AND id=#{id}
+    </delete>
+
+    <insert id="subGood">
+        INSERT INTO goods(username,id) VALUES(#{username}, #{id})
+    </insert>
+
+    <delete id="cancelGood">
+        DELETE FROM goods WHERE username=#{username} AND id=#{id}
+    </delete>
+
+    <select id="isStore" resultType="boolean">
+        <![CDATA[ SELECT count(id) FROM stores WHERE username=#{username} AND id=#{id} ]]>
+    </select>
+
+    <select id="isGood" resultType="boolean">
+        <![CDATA[ SELECT count(id) FROM goods WHERE username=#{username} AND id=#{id} ]]>
+    </select>
+
+    <insert id="addPicture">
+        INSERT INTO pictures(username,pictures,id) VALUES(#{username}, #{filename}, #{id})
+    </insert>
+
+    <insert id="addMessage" useGeneratedKeys="true" parameterType="org.sang.entity.Message" keyProperty="message.id">
+        INSERT INTO message(username,content,date) VALUES(#{message.username}, #{message.content}, #{message.date})
+
+    </insert>
+
+    <update id="addMessageCount">
+        UPDATE user SET messages_num=messages_num+1 WHERE username=#{username}
+    </update>
+</mapper>

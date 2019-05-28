@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.dao.UserDao">
+    <select id="getUser" parameterType="string" resultMap="User">
+        SELECT * FROM user WHERE username=#{username} AND password=MD5(#{password})
+    </select>
+
+    <resultMap id="User" type="org.sang.entity.User">
+        <id column="username" jdbcType="VARCHAR" property="username"></id>
+        <id column="password" jdbcType="VARCHAR" property="password"></id>
+        <id column="head_protrait" jdbcType="VARCHAR" property="head_protrait"></id>
+        <id column="fans_num" jdbcType="INTEGER" property="fans_num"></id>
+        <id column="messages_num" jdbcType="INTEGER" property="messages_num"></id>
+        <id column="phone" jdbcType="VARCHAR" property="phone"></id>
+        <id column="personal_tag" jdbcType="VARCHAR" property="personal_tag"></id>
+        <id column="institute" jdbcType="VARCHAR" property="institute"></id>
+        <id column="real_name" jdbcType="VARCHAR" property="real_name"></id>
+        <association property="fans" column="username" select="getAllFans"></association>
+
+    </resultMap>
+
+    <select id="addUser" parameterType="string">
+        INSERT INTO user(username,password) VALUES (#{username}, MD5(#{password}))
+    </select>
+
+    <select id="getAllFans" parameterType="string" resultType="java.lang.String">
+        SELECT fan_name FROM fan WHERE username=#{username}
+    </select>
+    
+    <select id="userExist" resultType="boolean" parameterType="string">
+        <![CDATA[ SELECT count(username) FROM user WHERE username=#{username} ]]>
+    </select>
+
+    <select id="changeUserPhone" parameterType="string">
+         UPDATE user SET phone=#{phone} WHERE username= #{username}
+    </select>
+
+    <select id="changeUserPersonal_tag" parameterType="string">
+         UPDATE user SET personal_tag=#{personal_tag} WHERE username= #{username}
+    </select>
+
+    <select id="changeUserInstitute" parameterType="string">
+        UPDATE user SET institute=#{institute} WHERE username= #{username}
+    </select>
+
+    <select id="changeUserReal_name" parameterType="string">
+         UPDATE user SET real_name=#{real_name} WHERE username= #{username}
+    </select>
+
+    <select id="changeUserHead_protrait" parameterType="string">
+        UPDATE user SET head_protrait=#{head_protrait} WHERE username= #{username}
+    </select>
+
+</mapper>

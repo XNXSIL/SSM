@@ -1,0 +1,99 @@
+.mybtn{position:fixed; right:10px; bottom:20px; display:block; width:50px; height:50px;border-radius:50px; padding:0px; text-align:center; line-height:50px;}
+
+.modal.left .modal-dialog,
+.modal.right .modal-dialog {
+    position: fixed;
+    margin: auto;
+    width: 320px;
+    height: 100%;
+    -webkit-transform: translate3d(0%, 0, 0);
+    -ms-transform: translate3d(0%, 0, 0);
+    -o-transform: translate3d(0%, 0, 0);
+    transform: translate3d(0%, 0, 0);
+}
+
+.modal.left .modal-content,
+.modal.right .modal-content {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.modal.left .modal-body,
+.modal.right .modal-body {
+    padding: 15px 15px 80px;
+}
+
+/*Left*/
+.modal.left.fade .modal-dialog{
+    left: -320px;
+    -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+    -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+    -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+    transition: opacity 0.3s linear, left 0.3s ease-out;
+}
+
+.modal.left.fade.in .modal-dialog{
+    left: 0;
+}
+
+/*Right*/
+.modal.right.fade .modal-dialog {
+    right: -320px;
+    -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
+    -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
+    -o-transition: opacity 0.3s linear, right 0.3s ease-out;
+    transition: opacity 0.3s linear, right 0.3s ease-out;
+}
+
+.modal.right.fade.in .modal-dialog {
+    right: 0;
+}
+
+/* ----- MODAL STYLE ----- */
+.modal-content {
+    border-radius: 0;
+    border: none;
+}
+
+.modal-header {
+    border-bottom-color: #EEEEEE;
+    background-color: #FAFAFA;
+}
+
+#utilbar{
+    padding-left: 4%;
+    padding-right: 0%;
+    padding-bottom: 1%;
+    padding-top: 1%;
+    font-size:25px;
+    color:gray;
+}
+.store{
+    padding-left: 8%;
+    padding-right: 8%;
+}
+.comment{
+    padding-left: 14%;
+    padding-right: 14%;
+}
+.good{
+    padding-left: 12%;
+    padding-right: 4%;
+}
+.content{
+    background-color: #f2f2f5;
+    margin-bottom: 0px;
+}
+.contentinput{
+    width: 80%;
+    margin-left: 2%;
+}
+.line{
+    border: 0;
+    height: 0px;
+    box-shadow: 0 0 0.25px 0.25px gray;
+}
+.picture{
+    width: 100%;
+    height: 190px;
+}
